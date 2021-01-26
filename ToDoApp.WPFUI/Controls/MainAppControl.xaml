@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="ToDoApp.WPFUI.Controls.MainAppControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ToDoApp.WPFUI.Controls"
+             mc:Ignorable="d"
+             Background="White"
+             d:DesignHeight="600" d:DesignWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        
+
+        <!-- Row 1 -->
+        <TextBlock
+            Grid.Row="0"
+            FontSize="30"
+            HorizontalAlignment="Center"
+            FontWeight="SemiBold"
+            Text="Things I Need To Get Done"
+            Margin="20 20"
+        />
+
+    </Grid>
+</UserControl>

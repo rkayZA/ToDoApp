@@ -5,9 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoApp.WPFUI"
         mc:Ignorable="d"
-        Title="Things I Need To Get Done" Height="650" Width="650">
+        FontSize="18"
+        Title="Things I Need To Get Done" Height="650" Width="650" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/Check Box-WF.jpeg">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />   
+        </Grid.RowDefinitions>
         
+        <Menu IsMainMenu="True" FontSize="20" Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem x:Name="toListMenuItem" Header="_Go to List" Click="GoToListMenuItem_Click" />
+                <MenuItem x:Name="exitMenuItem" Header="E_xit" Click="ExitMenuItem_Click"/>    
+            </MenuItem>
+            <MenuItem x:Name="aboutMenuItem" Header="_About" Click="AboutMenuItem_Click"/>
+        </Menu>
+
+        <ContentControl x:Name="appContent" Grid.Row="1" Margin="15"/>
 
     </Grid>
 </Window>
