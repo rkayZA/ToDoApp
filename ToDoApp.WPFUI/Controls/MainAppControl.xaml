@@ -6,18 +6,19 @@
              xmlns:local="clr-namespace:ToDoApp.WPFUI.Controls"
              mc:Ignorable="d"
              Background="White"
+             FontSize="18"
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        
 
-        <!-- Row 1 -->
         <TextBlock
             Grid.Row="0"
             FontSize="30"
@@ -26,6 +27,50 @@
             Text="Things I Need To Get Done"
             Margin="20 20"
         />
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10 10">
+            <TextBlock Text="What I Need To Do" Margin="0 0 5 0"/>
+            <TextBox x:Name="toDoListItemText" MinWidth="300" Margin="0 0 10 0"/>
+            <Button x:Name="addItemButton" Content="Add" Padding="25 2" Click="addItemButton_Click"/>
+        </StackPanel>
+
+        <DataGrid 
+            FontSize="14"
+            Grid.Row="2"
+            AutoGenerateColumns="False" 
+            Height="350" 
+            Name="toDoItemListGrid" 
+            VerticalAlignment="Top" 
+            VerticalGridLinesBrush="#FFE2E2E2" 
+            HorizontalGridLinesBrush="#FFEEEEEE" 
+            Margin="5 0"
+            CanUserDeleteRows="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="1*" Header="Date Added" IsReadOnly="False" Binding="{Binding Path=DateAdded}"/>
+                <DataGridTextColumn Width="5*" Header="To Do Item"  IsReadOnly="False" Binding="{Binding Path=ToDoItem}"/>
+                <DataGridCheckBoxColumn Width="1*" Header="Completed?" IsReadOnly="False" Binding="{Binding Path=IsCompleted}"/>
+            </DataGrid.Columns>
+           
+        </DataGrid>
+
+        <CheckBox 
+            Grid.Row="3" 
+            x:Name="showCompletedItemsChk" 
+            Content="Show Completed Items" 
+            VerticalContentAlignment="Center"
+            Margin="5 0 0 0"/>
+
+        <StackPanel 
+            Grid.Row="4" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center"
+            Margin="0 10">
+            <Button 
+                x:Name="deleteItemBtn" 
+                Content="Delete To Do Item" 
+                Padding="10 0"
+                Click="deleteItemBtn_Click"/>
+        </StackPanel>
 
     </Grid>
 </UserControl>

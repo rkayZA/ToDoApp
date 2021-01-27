@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ToDoApp.Library.Models;
 
 namespace ToDoApp.WPFUI.Controls
 {
@@ -21,6 +22,27 @@ namespace ToDoApp.WPFUI.Controls
         public MainAppControl()
         {
             InitializeComponent();
+        }
+
+        private void addItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddItemToList();
+        }
+
+        private void AddItemToList()
+        {
+            ToDoItemModel toDoItem = new ToDoItemModel();
+            toDoItem.DateAdded = DateTime.Now.ToString("dd-MM-yyyy");
+            toDoItem.ToDoItem = toDoListItemText.Text;
+            toDoItemListGrid.Items.Add(toDoItem);
+
+            toDoListItemText.Clear();
+        }
+
+        private void deleteItemBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var itemindex = toDoItemListGrid.SelectedIndex;
+            toDoItemListGrid.Items.RemoveAt(toDoItemListGrid.SelectedIndex);
         }
     }
 }
