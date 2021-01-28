@@ -45,10 +45,34 @@
             HorizontalGridLinesBrush="#FFEEEEEE" 
             Margin="5 0"
             CanUserDeleteRows="True">
+
+
+
+
+
             <DataGrid.Columns>
                 <DataGridTextColumn Width="1*" Header="Date Added" IsReadOnly="False" Binding="{Binding Path=DateAdded}"/>
-                <DataGridTextColumn Width="5*" Header="To Do Item"  IsReadOnly="False" Binding="{Binding Path=ToDoItem}"/>
-                <DataGridCheckBoxColumn Width="1*" Header="Completed?" IsReadOnly="False" Binding="{Binding Path=IsCompleted}"/>
+                <DataGridTextColumn x:Name="toDoItemColumn" Width="5*" Header="To Do Item"  IsReadOnly="False" Binding="{Binding Path=ToDoItem}" />
+                <!-- <DataGridCheckBoxColumn Width="1*" Header="Completed?" IsReadOnly="False" Binding="{Binding Path=IsCompleted, UpdateSourceTrigger=PropertyChanged}" > -->
+                <DataGridTemplateColumn Header="Completed">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            
+                            <CheckBox 
+                                x:Name="isCompletedCheckBox" 
+                                IsChecked="{Binding IsCompleted, UpdateSourceTrigger=PropertyChanged}" 
+                                Checked="OnChecked"
+                                Unchecked="OnUnChecked"
+                                />
+                           
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+                
+                    
+                
             </DataGrid.Columns>
            
         </DataGrid>
@@ -58,7 +82,8 @@
             x:Name="showCompletedItemsChk" 
             Content="Show Completed Items" 
             VerticalContentAlignment="Center"
-            Margin="5 0 0 0"/>
+            Margin="5 0 0 0"
+            />
 
         <StackPanel 
             Grid.Row="4" 
