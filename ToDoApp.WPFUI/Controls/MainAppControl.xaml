@@ -51,8 +51,8 @@
 
 
             <DataGrid.Columns>
-                <DataGridTextColumn Width="1*" Header="Date Added" IsReadOnly="False" Binding="{Binding Path=DateAdded}"/>
-                <DataGridTextColumn x:Name="toDoItemColumn" Width="5*" Header="To Do Item"  IsReadOnly="False" Binding="{Binding Path=ToDoItem}" />
+                <DataGridTextColumn Width="1*" Header="Date Added" IsReadOnly="True" Binding="{Binding Path=DateAdded}"/>
+                <DataGridTextColumn x:Name="toDoItemColumn" Width="5*" Header="To Do Item"  IsReadOnly="False" Binding="{Binding Path=ToDoItem, UpdateSourceTrigger=PropertyChanged}" />
                 <!-- <DataGridCheckBoxColumn Width="1*" Header="Completed?" IsReadOnly="False" Binding="{Binding Path=IsCompleted, UpdateSourceTrigger=PropertyChanged}" > -->
                 <DataGridTemplateColumn Header="Completed">
                     <DataGridTemplateColumn.CellTemplate>
@@ -68,13 +68,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
-
-                
-                    
-                
             </DataGrid.Columns>
-           
         </DataGrid>
 
         <CheckBox 
@@ -83,6 +77,8 @@
             Content="Show Completed Items" 
             VerticalContentAlignment="Center"
             Margin="5 0 0 0"
+            Checked="showHideCompletedItems"
+            Unchecked="showHideCompletedItems"
             />
 
         <StackPanel 

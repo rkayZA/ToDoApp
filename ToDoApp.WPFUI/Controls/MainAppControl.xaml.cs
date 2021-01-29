@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -30,7 +31,6 @@ namespace ToDoApp.WPFUI.Controls
 
         private void PopulateItemList()
         {
-           
             // Test data to load on application start - just simulating a load from database/file
             for (int i = 1; i < 6; i++)
             {
@@ -40,7 +40,6 @@ namespace ToDoApp.WPFUI.Controls
 
                 toDoItemList.Add(listItem);
             }
-
             toDoItemListGrid.ItemsSource = toDoItemList;
         }
 
@@ -55,7 +54,6 @@ namespace ToDoApp.WPFUI.Controls
             toDoItem.DateAdded = DateTime.Now.ToString("dd-MM-yyyy");
             toDoItem.ToDoItem = toDoListItemText.Text;
             toDoItemList.Add(toDoItem);
-
             toDoListItemText.Clear();
         }
 
@@ -67,9 +65,13 @@ namespace ToDoApp.WPFUI.Controls
 
         public void OnChecked(object sender, RoutedEventArgs e)
         {
-                        
             var row = toDoItemListGrid.ItemContainerGenerator.ContainerFromItem(toDoItemListGrid.SelectedItem) as DataGridRow;
             row.Background = Brushes.LightGreen;
+
+            if (showCompletedItemsChk.IsChecked == false)
+            {
+                row.Visibility = Visibility.Collapsed;
+            }
             toDoItemListGrid.SelectedItem = null;
                 
         }
@@ -81,5 +83,52 @@ namespace ToDoApp.WPFUI.Controls
             toDoItemListGrid.SelectedItem = null;
         }
 
+        private void showHideCompletedItems(object sender, RoutedEventArgs e)
+        {
+            var itemsSource = toDoItemListGrid.ItemsSource as ObservableCollection<ToDoItemModel>;
+
+            if (showCompletedItemsChk.IsChecked == true)
+            {
+                showCompleted(itemsSource);
+            }
+            else
+            {
+                hideCompleted(itemsSource);
+            }
+        }
+
+        private void showCompleted(ObservableCollection<ToDoItemModel> itemList)
+        {
+            foreach (ToDoItemModel item in itemList)
+            {
+                var row = toDoItemListGrid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+
+                if (item.IsCompleted == true && row.Visibility == Visibility.Collapsed)
+                {
+                    ToggleToDoItemVisibility(true, row);
+                }
+            }
+        }
+
+        private void hideCompleted(ObservableCollection<ToDoItemModel> itemList)
+        {
+            var itemsSource = toDoItemListGrid.ItemsSource as ObservableCollection<ToDoItemModel>;
+
+            foreach (ToDoItemModel item in itemsSource)
+            {
+                var row = toDoItemListGrid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+
+                if (item.IsCompleted == true && row.Visibility == Visibility.Visible)
+                {
+                    ToggleToDoItemVisibility(false, row);
+                }
+            }
+        }
+
+        public void ToggleToDoItemVisibility(bool displayRow, DataGridRow row)
+        {
+            Visibility display = displayRow ? Visibility.Visible : Visibility.Collapsed;
+            row.Visibility = display;
+        }
     }
 }
