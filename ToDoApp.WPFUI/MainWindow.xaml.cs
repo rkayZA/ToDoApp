@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ToDoApp.Library.DataAccess;
 using ToDoApp.WPFUI.Controls;
 
 namespace ToDoApp.WPFUI
@@ -21,13 +22,14 @@ namespace ToDoApp.WPFUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ISQLiteData _db;
 
-        
-
-        public MainWindow()
+        public MainWindow(ISQLiteData db)
         {
+            _db = db;
             InitializeComponent();
-            appContent.Content = new MainAppControl();
+            appContent.Content = new MainAppControl(_db);
+            
         }
 
 
@@ -39,7 +41,7 @@ namespace ToDoApp.WPFUI
 
         private void GoToListMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            appContent.Content = new MainAppControl();
+            appContent.Content = new MainAppControl(_db);
         }
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)

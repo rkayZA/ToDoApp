@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ToDoApp.Library.DataAccess;
 using ToDoApp.Library.Models;
 
 namespace ToDoApp.WPFUI.Controls
@@ -22,24 +23,32 @@ namespace ToDoApp.WPFUI.Controls
     public partial class MainAppControl : UserControl
     {
         ObservableCollection<ToDoItemModel> toDoItemList = new ObservableCollection<ToDoItemModel>();
-        
-        public MainAppControl()
+        private readonly ISQLiteData _db;
+
+        public MainAppControl(ISQLiteData db)
         {
+            _db = db;
             InitializeComponent();
             PopulateItemList();
         }
 
         private void PopulateItemList()
         {
-            // Test data to load on application start - just simulating a load from database/file
-            for (int i = 1; i < 6; i++)
-            {
-                ToDoItemModel listItem = new ToDoItemModel();
-                listItem.DateAdded = DateTime.Now.ToString("dd-MM-yyyy");
-                listItem.ToDoItem = $"Item {i} - Thing I need to do";
+            List<ToDoItemModel> alltemList = _db.LoadAllItems();
 
-                toDoItemList.Add(listItem);
+            foreach (ToDoItemModel item in alltemList)
+            {
+                toDoItemList.Add(item);
             }
+            //// Test data to load on application start - just simulating a load from database/file
+            //for (int i = 1; i < 6; i++)
+            //{
+            //    ToDoItemModel listItem = new ToDoItemModel();
+            //    listItem.DateAdded = DateTime.Now.ToString("dd-MM-yyyy");
+            //    listItem.ToDoItem = $"Item {i} - Thing I need to do";
+
+            //    toDoItemList.Add(listItem);
+            //}
             toDoItemListGrid.ItemsSource = toDoItemList;
         }
 
@@ -65,12 +74,14 @@ namespace ToDoApp.WPFUI.Controls
 
         public void OnChecked(object sender, RoutedEventArgs e)
         {
+            var selectedItem = toDoItemListGrid.SelectedItem as ToDoItemModel;
             var row = toDoItemListGrid.ItemContainerGenerator.ContainerFromItem(toDoItemListGrid.SelectedItem) as DataGridRow;
             row.Background = Brushes.LightGreen;
 
             if (showCompletedItemsChk.IsChecked == false)
             {
                 row.Visibility = Visibility.Collapsed;
+                
             }
             toDoItemListGrid.SelectedItem = null;
                 

@@ -10,7 +10,7 @@ namespace ToDoApp.Library.Models
         public string DateAdded { get; set; }
         public string ToDoItem { get; set; }
         public bool IsCompleted { get; set; } = false;
-        public string DateCompleted { get; set; } = null;
+      
      
     }
 }
