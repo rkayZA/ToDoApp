@@ -35,7 +35,7 @@ namespace ToDoApp.WPFUI.Controls
         private void PopulateItemList()
         {
             List<ToDoItemModel> alltemList = _db.LoadAllItems();
-
+            
             foreach (ToDoItemModel item in alltemList)
             {
                 toDoItemList.Add(item);
@@ -50,6 +50,7 @@ namespace ToDoApp.WPFUI.Controls
             //    toDoItemList.Add(listItem);
             //}
             toDoItemListGrid.ItemsSource = toDoItemList;
+
         }
 
         private void addItemButton_Click(object sender, RoutedEventArgs e)
@@ -74,23 +75,56 @@ namespace ToDoApp.WPFUI.Controls
 
         public void OnChecked(object sender, RoutedEventArgs e)
         {
-            var selectedItem = toDoItemListGrid.SelectedItem as ToDoItemModel;
-            var row = toDoItemListGrid.ItemContainerGenerator.ContainerFromItem(toDoItemListGrid.SelectedItem) as DataGridRow;
-            row.Background = Brushes.LightGreen;
+            hideCompletedItem();
+        }
 
-            if (showCompletedItemsChk.IsChecked == false)
+        public void hideCompletedItem()
+        {
+            var selectedItem = toDoItemListGrid.SelectedItem as ToDoItemModel;
+            if (selectedItem != null)
             {
-                row.Visibility = Visibility.Collapsed;
-                
+                var row = toDoItemListGrid.ItemContainerGenerator.ContainerFromItem(toDoItemListGrid.SelectedItem) as DataGridRow;
+                row.Background = Brushes.LightGreen;
+
+                if (showCompletedItemsChk.IsChecked == false)
+                {
+                    row.Visibility = Visibility.Collapsed;
+
+                }
+                toDoItemListGrid.SelectedItem = null;
             }
-            toDoItemListGrid.SelectedItem = null;
-                
+            else
+            {
+                var itemsSource = toDoItemListGrid.ItemsSource as IEnumerable;
+                if (itemsSource != null)
+                {
+                    foreach (ToDoItemModel item in itemsSource)
+                    {
+                        if (item.IsCompleted == true)
+                        {
+                            var checkedRow = toDoItemListGrid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+                            if (checkedRow != null)
+                            {
+                                checkedRow.Background = Brushes.LightGreen;
+                                checkedRow.Visibility = Visibility.Collapsed;
+                            }
+
+                            if (showCompletedItemsChk.IsChecked == true)
+                            {
+                                checkedRow.Visibility = Visibility.Collapsed;
+                            }
+
+                        }
+                    }
+                }
+            }
         }
 
         public void OnUnChecked(object sender, RoutedEventArgs e)
         {
             var row = toDoItemListGrid.ItemContainerGenerator.ContainerFromItem(toDoItemListGrid.SelectedItem) as DataGridRow;
             row.Background = Brushes.White;
+            row.Visibility = Visibility.Visible;
             toDoItemListGrid.SelectedItem = null;
         }
 
