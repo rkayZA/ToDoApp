@@ -61,7 +61,7 @@ namespace ToDoApp.WPFUI.Controls
         private void AddItemToList()
         {
             ToDoItemModel toDoItem = new ToDoItemModel();
-            toDoItem.DateAdded = DateTime.Now.ToString("dd-MM-yyyy");
+            toDoItem.DateAdded = DateTime.Now.ToString("yyyy-MM-dd");
             toDoItem.ToDoItem = toDoListItemText.Text;
             toDoItemList.Add(toDoItem);
             toDoListItemText.Clear();
@@ -80,9 +80,10 @@ namespace ToDoApp.WPFUI.Controls
 
         public void hideCompletedItem()
         {
-            var selectedItem = toDoItemListGrid.SelectedItem as ToDoItemModel;
-            if (selectedItem != null)
+
+            try
             {
+                var selectedItem = toDoItemListGrid.SelectedItem as ToDoItemModel;
                 var row = toDoItemListGrid.ItemContainerGenerator.ContainerFromItem(toDoItemListGrid.SelectedItem) as DataGridRow;
                 row.Background = Brushes.LightGreen;
 
@@ -93,8 +94,9 @@ namespace ToDoApp.WPFUI.Controls
                 }
                 toDoItemListGrid.SelectedItem = null;
             }
-            else
+            catch (NullReferenceException)
             {
+
                 var itemsSource = toDoItemListGrid.ItemsSource as IEnumerable;
                 if (itemsSource != null)
                 {
@@ -119,6 +121,7 @@ namespace ToDoApp.WPFUI.Controls
                 }
             }
         }
+
 
         public void OnUnChecked(object sender, RoutedEventArgs e)
         {
