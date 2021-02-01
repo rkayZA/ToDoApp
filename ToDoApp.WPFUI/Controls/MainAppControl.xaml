@@ -45,7 +45,7 @@
             VerticalGridLinesBrush="#FFE2E2E2" 
             HorizontalGridLinesBrush="#FFEEEEEE" 
             Margin="5 0"
-            CanUserDeleteRows="True"
+            CanUserAddRows="False"
             TargetUpdated="toDoItemListGrid_TargetUpdated">
 
             <DataGrid.Columns>
