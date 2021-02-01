@@ -26,6 +26,16 @@ namespace ToDoApp.Library.DataAccess
             return _db.LoadData<ToDoItemModel, dynamic>(sql, new { }, connectionStringName);
         }
 
+        public void UpdateItemInDatabase(ToDoItemModel listItem)
+        {
+            string sql = @"update ToDoItemsList set DateAdded = @DateAdded, ToDoItem = @ToDoItem, IsCompleted = @IsCompleted where Id = @Id";
+            _db.SaveData(sql, new { listItem.Id, listItem.DateAdded, listItem.ToDoItem, listItem.IsCompleted }, connectionStringName);
+        }
 
+        public void SaveItemToDatabase(ToDoItemModel listItem)
+        {
+            string sql = @"insert into ToDoItemsList (DateAdded, ToDoItem, IsCompleted) values (@DateAdded, @ToDoItem, @IsCompleted);";
+            _db.SaveData(sql, new { listItem.DateAdded, listItem.ToDoItem, listItem.IsCompleted}, connectionStringName);
+        }
     }
 }

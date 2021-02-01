@@ -8,6 +8,7 @@
              Background="White"
              FontSize="18"
              d:DesignHeight="600" d:DesignWidth="600">
+   
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -44,16 +45,20 @@
             VerticalGridLinesBrush="#FFE2E2E2" 
             HorizontalGridLinesBrush="#FFEEEEEE" 
             Margin="5 0"
-            CanUserDeleteRows="True">
-
-
-
-
+            CanUserDeleteRows="True"
+            TargetUpdated="toDoItemListGrid_TargetUpdated">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Width="1*" Header="Date Added" IsReadOnly="True" Binding="{Binding Path=DateAdded}"/>
-                <DataGridTextColumn x:Name="toDoItemColumn" Width="5*" Header="To Do Item"  IsReadOnly="False" Binding="{Binding Path=ToDoItem, UpdateSourceTrigger=PropertyChanged}" />
-                <!-- <DataGridCheckBoxColumn Width="1*" Header="Completed?" IsReadOnly="False" Binding="{Binding Path=IsCompleted, UpdateSourceTrigger=PropertyChanged}" > -->
+                <DataGridTextColumn Width="1*" Header="Date Added" IsReadOnly="True" Binding="{Binding Path=DateAdded}" />
+                <DataGridTextColumn 
+                    x:Name="toDoItemColumn" 
+                    Width="5*" 
+                    Header="To Do Item"  
+                    IsReadOnly="False" 
+                    Binding="{Binding Path=ToDoItem, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" 
+                    />
+                
+                
                 <DataGridTemplateColumn Header="Completed">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -81,7 +86,7 @@
             Unchecked="showHideCompletedItems"
             />
 
-        <StackPanel 
+        <!--<StackPanel 
             Grid.Row="4" 
             Orientation="Horizontal" 
             HorizontalAlignment="Center"
@@ -91,7 +96,7 @@
                 Content="Delete To Do Item" 
                 Padding="10 0"
                 Click="deleteItemBtn_Click"/>
-        </StackPanel>
+        </StackPanel>-->
 
     </Grid>
 </UserControl>

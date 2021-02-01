@@ -40,17 +40,8 @@ namespace ToDoApp.WPFUI.Controls
             {
                 toDoItemList.Add(item);
             }
-            //// Test data to load on application start - just simulating a load from database/file
-            //for (int i = 1; i < 6; i++)
-            //{
-            //    ToDoItemModel listItem = new ToDoItemModel();
-            //    listItem.DateAdded = DateTime.Now.ToString("dd-MM-yyyy");
-            //    listItem.ToDoItem = $"Item {i} - Thing I need to do";
 
-            //    toDoItemList.Add(listItem);
-            //}
             toDoItemListGrid.ItemsSource = toDoItemList;
-
         }
 
         private void addItemButton_Click(object sender, RoutedEventArgs e)
@@ -65,6 +56,7 @@ namespace ToDoApp.WPFUI.Controls
             toDoItem.ToDoItem = toDoListItemText.Text;
             toDoItemList.Add(toDoItem);
             toDoListItemText.Clear();
+            _db.SaveItemToDatabase(toDoItem);
         }
 
         private void deleteItemBtn_Click(object sender, RoutedEventArgs e)
@@ -80,7 +72,6 @@ namespace ToDoApp.WPFUI.Controls
 
         public void hideCompletedItem()
         {
-
             try
             {
                 var selectedItem = toDoItemListGrid.SelectedItem as ToDoItemModel;
@@ -92,11 +83,12 @@ namespace ToDoApp.WPFUI.Controls
                     row.Visibility = Visibility.Collapsed;
 
                 }
+                _db.UpdateItemInDatabase(selectedItem);
+
                 toDoItemListGrid.SelectedItem = null;
             }
             catch (NullReferenceException)
             {
-
                 var itemsSource = toDoItemListGrid.ItemsSource as IEnumerable;
                 if (itemsSource != null)
                 {
@@ -122,12 +114,13 @@ namespace ToDoApp.WPFUI.Controls
             }
         }
 
-
         public void OnUnChecked(object sender, RoutedEventArgs e)
         {
+            var selectedItem = toDoItemListGrid.SelectedItem as ToDoItemModel;
             var row = toDoItemListGrid.ItemContainerGenerator.ContainerFromItem(toDoItemListGrid.SelectedItem) as DataGridRow;
             row.Background = Brushes.White;
             row.Visibility = Visibility.Visible;
+            _db.UpdateItemInDatabase(selectedItem);
             toDoItemListGrid.SelectedItem = null;
         }
 
@@ -177,6 +170,16 @@ namespace ToDoApp.WPFUI.Controls
         {
             Visibility display = displayRow ? Visibility.Visible : Visibility.Collapsed;
             row.Visibility = display;
+        }
+
+        private void toDoItemListGrid_TargetUpdated(object sender, DataTransferEventArgs e)
+        {
+            
+            var selectedItem = toDoItemListGrid.SelectedItem as ToDoItemModel;
+            if (selectedItem != null)
+            {
+                _db.UpdateItemInDatabase(selectedItem);
+            }
         }
     }
 }
