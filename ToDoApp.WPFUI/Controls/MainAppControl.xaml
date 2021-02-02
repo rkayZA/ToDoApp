@@ -86,17 +86,7 @@
             Unchecked="showHideCompletedItems"
             />
 
-        <!--<StackPanel 
-            Grid.Row="4" 
-            Orientation="Horizontal" 
-            HorizontalAlignment="Center"
-            Margin="0 10">
-            <Button 
-                x:Name="deleteItemBtn" 
-                Content="Delete To Do Item" 
-                Padding="10 0"
-                Click="deleteItemBtn_Click"/>
-        </StackPanel>-->
+        
 
     </Grid>
 </UserControl>

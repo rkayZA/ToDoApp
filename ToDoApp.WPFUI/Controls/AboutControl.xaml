@@ -12,6 +12,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -50,6 +51,16 @@
             Track a  list of things you need to get done by putting them 
             in a list and checking them off once they are done.
         </TextBlock>
+
+        <Button
+            x:Name="backToListBtn"
+            Grid.Row="3" 
+            Content="Back To List"
+            Background="White"
+            Foreground="Black" 
+            HorizontalAlignment="Center"
+            Padding="20 5"
+            Click="backToListBtn_Click"/>
 
     </Grid>
 </UserControl>

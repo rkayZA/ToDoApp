@@ -23,10 +23,12 @@ namespace ToDoApp.WPFUI
     public partial class MainWindow : Window
     {
         private readonly ISQLiteData _db;
+        public static MainWindow _mainWindow;
 
         public MainWindow(ISQLiteData db)
         {
             _db = db;
+            _mainWindow = this;
             InitializeComponent();
             appContent.Content = new MainAppControl(_db);
             
@@ -36,12 +38,7 @@ namespace ToDoApp.WPFUI
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            appContent.Content = new AboutControl();
-        }
-
-        private void GoToListMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            appContent.Content = new MainAppControl(_db);
+            appContent.Content = new AboutControl(_db);
         }
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)

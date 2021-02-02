@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ToDoApp.Library.DataAccess;
 
 namespace ToDoApp.WPFUI.Controls
 {
@@ -18,14 +19,23 @@ namespace ToDoApp.WPFUI.Controls
     /// </summary>
     public partial class AboutControl : UserControl
     {
+        private readonly ISQLiteData _db;
+
         //public string Version
         //{
         //    get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
         //}
 
-        public AboutControl()
+        public AboutControl(ISQLiteData db)
         {
+            
+            _db = db;
             InitializeComponent();
+        }
+
+        private void backToListBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow._mainWindow.appContent.Content = new MainAppControl(_db);
         }
     }
 }
